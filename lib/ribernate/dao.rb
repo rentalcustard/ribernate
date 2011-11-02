@@ -1,5 +1,5 @@
 require 'active_support/inflector'
-module Ribernate::DAOMethods
+module Ribernate::DAO
   extend ActiveSupport::Concern
 
   included do

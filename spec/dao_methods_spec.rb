@@ -1,16 +1,16 @@
 module Ribernate; end
 require 'active_support'
-require File.dirname(__FILE__) + "/../lib/ribernate/dao_methods"
+require File.dirname(__FILE__) + "/../lib/ribernate/dao"
 class WidgetDAO
-  include Ribernate::DAOMethods
+  include Ribernate::DAO
 end
 
 class BarDAO
-  include Ribernate::DAOMethods
+  include Ribernate::DAO
   persists :bears
 end
 
-describe Ribernate::DAOMethods do
+describe Ribernate::DAO do
   context "with implicit table name" do
     subject { WidgetDAO.new }
     it "sets the table name based on class name" do

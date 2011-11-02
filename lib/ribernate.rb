@@ -4,5 +4,5 @@ require 'arel'
 module Ribernate
 end
 
-require 'ribernate/dao_methods'
+require 'ribernate/dao'
 require 'ribernate/model'

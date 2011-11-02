@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 class UserDAO
-  include Ribernate::DAOMethods
+  include Ribernate::DAO
 end
 
 class User
