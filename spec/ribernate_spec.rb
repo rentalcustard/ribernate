@@ -1,21 +1,29 @@
 require File.dirname(__FILE__) + "/../lib/ribernate"
-class PostDAO
+require 'support/fake_record'
+class UserDAO
   include Ribernate::DAOMethods
 
-  persists :posts #should this be optional?
+  persists :users #should this be optional?
 end
 
-class Post
-  #we're going to need some data-defining methods here I think.
+class User
+  include Ribernate::Model
+  attr_persisted :name
+
+  def initialize
+    @name = "foo"
+  end
 end
+
+Arel::Table.engine = Arel::Sql::Engine.new(FakeRecord::Base.new)
 
 describe "Ribernate behaviours" do
-  subject { PostDAO.new }
+  subject { UserDAO.new }
 
   describe "persisting an object" do
     it "doesn't explode" do
-      post = Post.new
-      subject.save(post)
+      user = User.new
+      subject.save(user)
     end
   end
 end
