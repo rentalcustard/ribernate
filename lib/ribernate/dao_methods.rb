@@ -1,12 +1,6 @@
 module Ribernate::DAOMethods
   extend ActiveSupport::Concern
 
-  class DB
-    def exec(query)
-      puts query
-    end
-  end
-
   module ClassMethods
     def persists(table_name)
       define_method :table do
@@ -16,7 +10,7 @@ module Ribernate::DAOMethods
         @inserter ||= Arel::InsertManager.new table.engine
       end
       define_method :db do
-        @db ||= DB.new
+        @db ||= Ribernate::DB.engine
       end
     end
   end

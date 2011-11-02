@@ -1,4 +1,6 @@
-require File.dirname(__FILE__) + "/../lib/ribernate"
+require 'active_support'
+module Ribernate; end
+require File.dirname(__FILE__) + "/../lib/ribernate/model"
 
 class User
   include Ribernate::Model

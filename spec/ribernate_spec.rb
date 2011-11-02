@@ -1,5 +1,5 @@
-require File.dirname(__FILE__) + "/../lib/ribernate"
-require 'support/fake_record'
+require 'spec_helper'
+
 class UserDAO
   include Ribernate::DAOMethods
 
@@ -15,6 +15,7 @@ class User
   end
 end
 
+
 Arel::Table.engine = Arel::Sql::Engine.new(FakeRecord::Base.new)
 
 describe "Ribernate behaviours" do
@@ -24,6 +25,7 @@ describe "Ribernate behaviours" do
     it "doesn't explode" do
       user = User.new
       subject.save(user)
+      Ribernate::DB.engine.sent_queries.should include('INSERT INTO "users" ("name") VALUES (\'foo\')')
     end
   end
 end
