@@ -1,16 +1,29 @@
+require 'active_support/inflector'
 module Ribernate::DAOMethods
   extend ActiveSupport::Concern
 
+  included do
+    define_method :table_name do
+      self.class.to_s.gsub("DAO", "").downcase.pluralize
+    end
+
+    define_method :table do
+      @table ||= Arel::Table.new(table_name)
+    end
+
+    define_method :inserter do
+      @inserter ||= Arel::InsertManager.new table.engine
+    end
+
+    define_method :db do
+      @db ||= Ribernate::DB.engine
+    end
+  end
+
   module ClassMethods
-    def persists(table_name)
-      define_method :table do
-        @table ||= Arel::Table.new(table_name)
-      end
-      define_method :inserter do
-        @inserter ||= Arel::InsertManager.new table.engine
-      end
-      define_method :db do
-        @db ||= Ribernate::DB.engine
+    def persists(name)
+      define_method :table_name do
+        name.to_s
       end
     end
   end
