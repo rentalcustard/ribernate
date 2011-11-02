@@ -5,7 +5,7 @@ module Ribernate::Model
     def attr_persisted(*attrs)
       attrs.each do |a|
         define_method("_" + a.to_s) do
-          eval "@#{a.to_s}"
+          instance_variable_get "@#{a.to_s}"
         end
       end
 
