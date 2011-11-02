@@ -3,15 +3,10 @@ module Ribernate::Model
 
   module ClassMethods
     def attr_persisted(*attrs)
-      attrs.each do |a|
-        define_method("_" + a.to_s) do
-          instance_variable_get "@#{a.to_s}"
-        end
+      define_method(:persisted_columns) do
+        attrs.inject({}) {|hsh, a| hsh[a] = instance_variable_get("@" + a.to_s); hsh }
       end
-
-      define_method(:_persisted_columns) do
-        attrs.inject({}) {|hsh, a| hsh[a] = send("_" + a.to_s); hsh }
-      end
+      private :persisted_columns
     end
   end
 end

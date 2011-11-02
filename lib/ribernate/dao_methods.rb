@@ -23,7 +23,7 @@ module Ribernate::DAOMethods
 
   def save(model)
     inserter.into table
-    insertion = model._persisted_columns.map do |col, val|
+    insertion = model.send(:persisted_columns).map do |col, val|
       [table[col], val]
     end
     inserter.insert(insertion)
